@@ -3,6 +3,11 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 
 class PomoTime extends Component {
+  constructor(props){
+    super(props);
+    this.state = {timeRemaining: 25};
+  }
+
 
   secondsToFormattedTime(seconds) {
     console.log("this work?")
@@ -11,10 +16,21 @@ class PomoTime extends Component {
     return correctFormat;
   }
 
-  startTimer() {
-    if (this.timer == 0) {
+  startTimer(timeRemaining) {
+    console.log(this.state.timeRemaining-1);
+    /*if (this.timer == 0) {
       this.timer = setInterval(this.countDown, 1000);
+    } */
+    var currentTime = this.state.timeRemaining;
+    while (currentTime> 1){
+      console.log("is this running????")
+      var newTimeRemaining = this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
+
+      // this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
     }
+
+    //this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
+    //onClick{this.state = 5}
   }
   countDown() {
     let seconds = this.state.seconds - 1;
@@ -26,15 +42,17 @@ class PomoTime extends Component {
     if (seconds == 0) {
       clearInterval(this.timer);
     }
+  }
 
   render(){
     return (
       <div>
         <div className="PomoTime">
-           <li> A clock will go here Timer, clock display, button </li>
+           <li>A clock will go here Timer, clock display, button </li>
         </div>
-        <button onClick={ (this.startTimer) => console.log("Hello") }>Start</button>
-        <h4>{this.secondsToFormattedTime(60 * 25)}</h4>
+        <button id="startButton" onClick={ () => this.startTimer() } >Start</button>
+        <button id="resetButton" onClick={ (/*this.resetTimer*/) => console.log("Hello") }>Reset</button>
+        <h4>{this.secondsToFormattedTime(this.state.timeRemaining)}</h4>
       </div>
 
     );
