@@ -5,9 +5,12 @@ import dateFormat from 'dateformat';
 class PomoTime extends Component {
   constructor(props){
     super(props);
-    this.state = {timeRemaining: 25};
+    this.state = {timeRemaining: (7), running: false};
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
 
   secondsToFormattedTime(seconds) {
     console.log("this work?")
@@ -16,42 +19,50 @@ class PomoTime extends Component {
     return correctFormat;
   }
 
+  tick() {
+    console.log ("hey look");
+    if (this.state.timeRemaining !== 0){
+      this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
+    }
+    else {
+      clearInterval(this.timerID);
+    }
+  }
+
   startTimer(timeRemaining) {
     console.log(this.state.timeRemaining-1);
-    /*if (this.timer == 0) {
-      this.timer = setInterval(this.countDown, 1000);
-    } */
-    var currentTime = this.state.timeRemaining;
-    while (currentTime> 1){
-      console.log("is this running????")
-      var newTimeRemaining = this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
+    this.timerID  = setInterval( () => this.tick(),1000);
+    this.setState((prevState) => ({running: true}));
 
-      // this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
-    }
-
-    //this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
-    //onClick{this.state = 5}
   }
-  countDown() {
-    let seconds = this.state.seconds - 1;
-    this.setState({
-      time: this.secondsToTime(seconds),
-      seconds: seconds,
-    });
 
-    if (seconds == 0) {
-      clearInterval(this.timer);
-    }
+  resetTimer(){
+    console.log("RESET!!")
+    this.setState((prevState) => ({timeRemaining: 7}));
+    this.setState((prevState) => ({running: false}));
+    clearInterval(this.timerID);
+
   }
 
   render(){
     return (
       <div>
         <div className="PomoTime">
-           <li>A clock will go here Timer, clock display, button </li>
+           <li>clock will go here Timer, clock display, button </li>
         </div>
-        <button id="startButton" onClick={ () => this.startTimer() } >Start</button>
-        <button id="resetButton" onClick={ (/*this.resetTimer*/) => console.log("Hello") }>Reset</button>
+        <button
+          id="startButton"
+          onClick={ () => this.startTimer()}
+          disabled={this.state.running}
+        >
+          Start
+        </button>
+        <button
+          id="resetButton"
+          onClick={ () => this.resetTimer() }
+        >
+          Reset
+        </button>
         <h4>{this.secondsToFormattedTime(this.state.timeRemaining)}</h4>
       </div>
 
