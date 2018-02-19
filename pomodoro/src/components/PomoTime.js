@@ -5,8 +5,10 @@ import dateFormat from 'dateformat';
 class PomoTime extends Component {
   constructor(props){
     super(props);
-    this.state = {timeRemaining: (7), running: false};
+    console.log(props);
+    this.state = {timeRemaining: (props.startingTime), running: false, onbreak: false};
   }
+
 
   componentWillUnmount() {
     clearInterval(this.timerID);
@@ -38,7 +40,7 @@ class PomoTime extends Component {
 
   resetTimer(){
     console.log("RESET!!")
-    this.setState((prevState) => ({timeRemaining: 7}));
+    this.setState((prevState) => ({timeRemaining: (this.props.startingTime)}));
     this.setState((prevState) => ({running: false}));
     clearInterval(this.timerID);
 
@@ -48,7 +50,7 @@ class PomoTime extends Component {
     return (
       <div>
         <div className="PomoTime">
-           <li>clock will go here Timer, clock display, button </li>
+           <h3>Welcome to your most productive self!</h3>
         </div>
         <button
           id="startButton"
