@@ -33,7 +33,7 @@ class App extends Component {
       <div className="App">
         {this.currentPhaseType() === "work_session" ? (<PomoTime startingTime={25*60} />) : null}
         {this.currentPhaseType() === "short_break" ? (<PomoTime startingTime={5*60} />) : null}
-        {this.currentPhaseType() === "long_break" ? (<PomoTime startingTime={15*60} />) : null}
+        {this.currentPhaseType() === "long_break" ? (<PomoTime startingTime={30*60} />) : null}
         <button onClick={ () => this.nextPhase() }>Current Phase: {this.currentPhaseType()}</button>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
