@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 import dateFormat from 'dateformat';
+import buzz from 'buzz';
+
 
 class PomoTime extends Component {
   constructor(props){
     super(props);
     console.log(props);
     this.state = {timeRemaining: (props.startingTime), running: false, onbreak: false};
+    this.audioElement = document.createElement('audio');
+    this.audioElement.src = "assets/9029__mistertood__metalboom5.wav";
   }
 
 
@@ -28,6 +32,7 @@ class PomoTime extends Component {
     }
     else {
       clearInterval(this.timerID);
+      this.audioElement.play();
     }
   }
 
@@ -39,7 +44,6 @@ class PomoTime extends Component {
   }
 
   resetTimer(){
-    console.log("RESET!!")
     this.setState((prevState) => ({timeRemaining: (this.props.startingTime)}));
     this.setState((prevState) => ({running: false}));
     clearInterval(this.timerID);
