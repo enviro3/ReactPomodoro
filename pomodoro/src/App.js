@@ -2,8 +2,21 @@ import React, { Component } from 'react';
 import logo from './timer.png';
 import './App.css';
 import PomoTime from './components/PomoTime.js';
+import TaskList from './components/TaskList.js'
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+import * as firebase from 'firebase';
 
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyB2VzhS7MofxHZWGP9NQsWEv_iTzJCCkM0",
+  authDomain: "pomodoro-react.firebaseapp.com",
+  databaseURL: "https://pomodoro-react.firebaseio.com",
+  projectId: "pomodoro-react",
+  storageBucket: "pomodoro-react.appspot.com",
+  messagingSenderId: "72179472717"
+};
+
+firebase.initializeApp(config);
 
 class App extends Component {
   constructor(props){
@@ -42,6 +55,7 @@ class App extends Component {
         <p className="App-intro">
           Want to be productive? Try the Pomodoro app!
         </p>
+        <TaskList firebase={firebase}/>
       </div>
     );
   }
