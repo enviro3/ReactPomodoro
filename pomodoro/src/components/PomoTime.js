@@ -8,7 +8,7 @@ class PomoTime extends Component {
   constructor(props){
     super(props);
     console.log(props);
-    this.state = {timeRemaining: (props.startingTime), running: false, onbreak: false};
+    this.state = {timeRemaining: (props.startingTime), running: false};
     this.audioElement = document.createElement('audio');
     this.audioElement.src = "assets/9029__mistertood__metalboom5.wav";
   }
@@ -27,10 +27,10 @@ class PomoTime extends Component {
 
   tick() {
     console.log ("hey look");
-    if (this.state.timeRemaining !== 0){
+    if (this.state.timeRemaining !== 0 && this.state.running){
       this.setState((prevState) => ({timeRemaining: prevState.timeRemaining-1}));
     }
-    else {
+    else if(this.state.timeRemaining == 0) {
       clearInterval(this.timerID);
       this.audioElement.play();
     }
@@ -38,7 +38,7 @@ class PomoTime extends Component {
 
   startTimer(timeRemaining) {
     console.log(this.state.timeRemaining-1);
-    this.timerID  = setInterval( () => this.tick(),1000);
+    this.timerID  = setInterval(() => this.tick(), 1000);
     this.setState((prevState) => ({running: true}));
 
   }
@@ -49,6 +49,11 @@ class PomoTime extends Component {
     clearInterval(this.timerID);
 
   }
+
+  pauseTimer(){
+    this.setState((prevState) => ({running: false}));
+  }
+
 
   render(){
     return (
@@ -62,6 +67,13 @@ class PomoTime extends Component {
           disabled={this.state.running}
         >
           Start
+        </button>
+
+        <button disabled={this.state.running ? false : true}
+          id="pauseButton"
+          onClick={ () => this.pauseTimer()}
+        >
+          Pause
         </button>
         <button
           id="resetButton"

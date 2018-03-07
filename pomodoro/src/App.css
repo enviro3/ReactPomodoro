@@ -44,3 +44,11 @@
   width: 200px;
   background-color: rgb(173, 128, 188);
 }
+
+#pauseButton{
+  margin-left: 10px;
+}
+
+#resetButton{
+  margin-left: 10px;
+}

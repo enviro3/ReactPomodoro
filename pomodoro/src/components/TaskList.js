@@ -55,10 +55,10 @@ class TaskList extends Component {
             <input type="submit" value="Add Quest" />
           </form>
           {
-            this.state.tasks.map((task) =>
-              <li key={task.key}>
+            this.state.tasks.reverse().map((task) =>
+              <div key={task.key}>
                 {task.value}
-              </li>
+              </div>
             )
           }
         </div>
